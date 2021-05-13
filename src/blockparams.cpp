@@ -302,7 +302,7 @@ void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake)
         if(fDebug) VRXswngdebug();
 
         // Version 1.2 Extended Curve Run Upgrade
-        if(pindexLast->nHeight > 200) {
+        if(pindexLast->nHeight > 7500) {
             // Set unbiased comparison
             difTime = blkTime - cntTime;
             // Run Curve
