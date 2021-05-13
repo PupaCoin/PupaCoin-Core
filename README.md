@@ -72,7 +72,7 @@ cd ~; wget http://download.oracle.com/berkeley-db/db-6.2.32.NC.tar.gz; tar zxf d
 
 ### GitHub pull (Source Download)
 ```
-cd ~; git clone https://github.com/SaltineChips/PupaCoin PupaCoin
+cd ~; git clone https://github.com/PupaCoin/PupaCoin-Core PupaCoin
 ```
 
 ### Build PupaCoin daemon
