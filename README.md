@@ -116,6 +116,8 @@ rpcport=20205
 port=20083
 rpcconnect=127.0.0.1
 rpcallowip=127.0.0.1
+addnode=143.198.232.91:20205
+addnode=159.65.145.86:20205
 CONFIG
 chmod 700 ~/.PPCN/PupaCoin.conf; chmod 700 ~/.PPCN; ls -la ~/.PPCN
 ```
