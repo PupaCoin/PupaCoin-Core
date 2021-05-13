@@ -1,0 +1,28 @@
+image: debian:stable
+
+before_script:
+  - apt-get update
+  - apt-get install -y --install-recommends build-essential libtool autotools-dev automake pkg-config bsdmainutils libevent-dev libz-dev libgmp-dev python qt5-default qt5-qmake qtbase5-dev-tools qttools5-dev-tools build-essential libboost-all-dev libssl-dev libdb++-dev libminiupnpc-dev libqrencode-dev
+  - chmod 755 src/leveldb/build_detect_platform
+  
+daemon:linux:
+  stage: build
+  script:
+    - cd src
+    - make -f makefile.unix USE_UPNP=-
+    - cd ..
+    
+  artifacts:
+    paths:
+    - src/PupaCoind
+
+    
+qt:linux:
+  stage: build
+  script:
+    - qmake -qt=qt5 USE_UPNP=0 USE_QRCODE=1 USE_DBUS=1
+    - make
+    
+  artifacts:
+    paths:
+    - PupaCoin-qt

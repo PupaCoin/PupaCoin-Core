@@ -1,0 +1,39 @@
+sudo: false
+os:
+  - linux
+cache: 
+  apt: true
+  directories:
+  - $HOME/transferdev/Transfercoin/src/leveldb
+  - $HOME/transferdev/Transfercoin/src/secp256k1
+  - $HOME/Infernoman/Transfercoin/src/leveldb
+  - $HOME/Infernoman/Transfercoin/src/secp256k1
+addons:
+  apt:
+    sources:
+    - boost-latest
+    - ubuntu-sdk-team
+    packages:
+    - build-essential
+    - libdb++-dev
+    - libboost1.55-all-dev
+    - autoconf
+    - protobuf-compiler
+    - libtool
+    - libminiupnpc-dev
+    - libqrencode-dev
+    - libprotobuf-dev
+    - libssl-dev
+    - libgmp3-dev
+    - libqt5gui5
+    - qtbase5-dev
+    - libqt5dbus5
+    - qttools5-dev
+    - qttools5-dev-tools
+before_install:
+  - chmod 755 src/leveldb/build_detect_platform
+script:
+  - qmake -qt=qt5 USE_UPNP=-
+  - make
+  - cd src
+  - make -f makefile.unix
