@@ -40,6 +40,8 @@ PupaCoin uses
 
 General Specs
 
+	Coin Name: PupaCoin
+	Ticker: PPCN
 	Block Spacing: 5 Minutes
 	Stake Minimum Age: 80 Confirmations (PoS-v3) | 6 Hours (PoS-v2)
 	PoW/PoS Reward: 1 PPCN (Per-block)
