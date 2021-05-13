@@ -42,6 +42,12 @@ General Specs
 
 	Block Spacing: 5 Minutes
 	Stake Minimum Age: 80 Confirmations (PoS-v3) | 6 Hours (PoS-v2)
+	PoW/PoS Reward: 1 PPCN (Per-block)
+	MasterNode Reward: 3.5 PPCN (Per-block)
+	DevOps Fees: 0.25 PPCN (Per-block)
+	Maximum Coin Count: 21 Million PPCN
+	Premine Coin Count: 14 Million PPCN (used for - Airdrop (mostly), Graphics, Coding, and operating costs)
+	Mineable/Mintable Coin Count: 7 Million PPCN
 	Port: 20205
 	RPC Port: 20083
 
