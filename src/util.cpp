@@ -1229,6 +1229,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                fprintf(ConfFile, "rpcallowip=127.0.0.1\n");
                fprintf(ConfFile, "addnode=143.198.232.91:20205\n");
                fprintf(ConfFile, "addnode=159.65.145.86:20205\n");
+               fprintf(ConfFile, "addnode=207.154.220.210:20205\n");
                fclose(ConfFile);
     }
 
