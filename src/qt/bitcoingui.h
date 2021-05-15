@@ -11,6 +11,7 @@ class ClientModel;
 class WalletModel;
 class TransactionView;
 class OverviewPage;
+class FractalUI;
 class AddressBookPage;
 class SendCoinsDialog;
 class SignVerifyMessageDialog;
