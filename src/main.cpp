@@ -2591,7 +2591,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         if (GetTime() > START_DEVOPS_PAYMENTS_TESTNET ){
             bDevOpsPayment = true;
         }
-    }else{
+    }else {
         if (GetTime() > START_DEVOPS_PAYMENTS){
             bDevOpsPayment = true;
         }
@@ -2607,9 +2607,9 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         }
     }
     // Fork toggle for payment upgrade
-    if(pindexBest->GetBlockTime() > 0) // Most recent fork time: 1596304800
+    if(pindexBest->GetBlockTime() > 0)
     {
-        if(pindexBest->GetBlockTime() > 200)
+        if(pindexBest->GetBlockTime() > 725)
         {
             bDevOpsPayment = true;
         }
@@ -2623,7 +2623,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         bDevOpsPayment = false;
     }
     // Run checks if at fork height
-    if(0>1) // bDevOpsPayment
+    if(bDevOpsPayment && nBestHeight > 725)
     {
         int64_t nStandardPayment = 0;
         int64_t nMasternodePayment = 0;
@@ -2654,8 +2654,8 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             nProofOfIndexMasternode = 1;
             nProofOfIndexDevops = 2;
             if (vtx[isProofOfStake].vout.size() != 3) {
-                    LogPrintf("CheckBlock() : PoW submission doesn't include devops and/or masternode payment\n");
-                    fBlockHasPayments = false;
+                LogPrintf("CheckBlock() : PoW submission doesn't include devops and/or masternode payment\n");
+                fBlockHasPayments = false;
             }
             nStandardPayment = GetProofOfWorkReward(nBestHeight, 0);
         }
@@ -2670,7 +2670,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             nMasterNodeChecksEngageTime = nMasterNodeChecksDelayBaseTime + nMasterNodeChecksDelay;
         }
         // Devops Address Set and Updates
-        strVfyDevopsAddress = "CcABDmWkcSZPw8rMtoobShVFuudhf1svZu"; //
+        strVfyDevopsAddress = Params().DevOpsAddress(); // Make sure this is correct
         // Check PoW or PoS payments for current block
         for (unsigned int i=0; i < vtx[isProofOfStake].vout.size(); i++) {
             // Define values
@@ -2686,91 +2686,91 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             if (isProofOfStake) {
                 // Check for PoS masternode payment
                 if (i == nProofOfIndexMasternode) {
-                   if (mnodeman.IsPayeeAValidMasternode(rawPayee)) {
-                       LogPrintf("CheckBlock() : PoS Recipient masternode address validity succesfully verified\n");
-                   } else if (addressOut.ToString() == strVfyDevopsAddress) {
-                       LogPrintf("CheckBlock() : PoS Recipient masternode address validity succesfully verified\n");
-                   } else {
-                       if (nMasterNodeChecksEngageTime != 0) {
-                           if (fMnAdvRelay) {
-                               LogPrintf("CheckBlock() : PoS Recipient masternode address validity could not be verified\n");
-                               fBlockHasPayments = false;
-                           } else {
-                               LogPrintf("CheckBlock() : PoS Recipient masternode address validity skipping, Checks delay still active!\n");
-                           }
-                       }
-                   }
-                   if (nIndexedMasternodePayment == nMasternodePayment) {
-                       LogPrintf("CheckBlock() : PoS Recipient masternode amount validity succesfully verified\n");
-                   } else {
-                       LogPrintf("CheckBlock() : PoS Recipient masternode amount validity could not be verified\n");
-                       fBlockHasPayments = false;
-                   }
+                    if (mnodeman.IsPayeeAValidMasternode(rawPayee)) {
+                        LogPrintf("CheckBlock() : PoS Recipient masternode address validity succesfully verified\n");
+                    } else if (addressOut.ToString() == strVfyDevopsAddress) {
+                        LogPrintf("CheckBlock() : PoS Recipient masternode address validity succesfully verified\n");
+                    } else {
+                        if (nMasterNodeChecksEngageTime != 0) {
+                            if (fMnAdvRelay) {
+                                LogPrintf("CheckBlock() : PoS Recipient masternode address validity could not be verified\n");
+                                fBlockHasPayments = false;
+                            } else {
+                                LogPrintf("CheckBlock() : PoS Recipient masternode address validity skipping, Checks delay still active!\n");
+                            }
+                        }
+                    }
+                    if (nIndexedMasternodePayment == nMasternodePayment) {
+                        LogPrintf("CheckBlock() : PoS Recipient masternode amount validity succesfully verified\n");
+                    } else {
+                        LogPrintf("CheckBlock() : PoS Recipient masternode amount validity could not be verified\n");
+                        fBlockHasPayments = false;
+                    }
                 }
                 // Check for PoS devops payment
                 if (i == nProofOfIndexDevops) {
-                   if (addressOut.ToString() == strVfyDevopsAddress) {
-                       LogPrintf("CheckBlock() : PoS Recipient devops address validity succesfully verified\n");
-                   } else {
-                       LogPrintf("CheckBlock() : PoS Recipient devops address validity could not be verified\n");
-                       fBlockHasPayments = false;
-                   }
-                }
-                if (nIndexedDevopsPayment == nDevopsPayment) {
-                    LogPrintf("CheckBlock() : PoS Recipient devops amount validity succesfully verified\n");
-                } else {
-                    if (nIndexedDevopsPayment >= nDevopsPayment) {
+                    if (addressOut.ToString() == strVfyDevopsAddress) {
+                        LogPrintf("CheckBlock() : PoS Recipient devops address validity succesfully verified\n");
+                    } else {
+                        LogPrintf("CheckBlock() : PoS Recipient devops address validity could not be verified\n");
+                        fBlockHasPayments = false;
+                    }
+                    if (nIndexedDevopsPayment == nDevopsPayment) {
+                        LogPrintf("CheckBlock() : PoS Recipient devops amount validity succesfully verified\n");
+                    } else {
+                        if (nIndexedDevopsPayment >= nDevopsPayment) {
                             LogPrintf("CheckBlock() : PoS Reciepient devops amount is abnormal due to large fee paid");
                         } else {
                             LogPrintf("CheckBlock() : PoS Reciepient devops amount validity could not be verified");
                             fBlockHasPayments = false;
                         }
                     }
+                }
             }
             // PoW Checks
             else if (!isProofOfStake) {
                 // Check for PoW masternode payment
                 if (i == nProofOfIndexMasternode) {
-                   if (mnodeman.IsPayeeAValidMasternode(rawPayee)) {
-                      LogPrintf("CheckBlock() : PoW Recipient masternode address validity succesfully verified\n");
-                   } else if (addressOut.ToString() == strVfyDevopsAddress) {
-                      LogPrintf("CheckBlock() : PoW Recipient masternode address validity succesfully verified\n");
-                   } else {
-                      if (nMasterNodeChecksEngageTime != 0) {
-                          if (fMnAdvRelay) {
-                              LogPrintf("CheckBlock() : PoW Recipient masternode address validity could not be verified\n");
-                              fBlockHasPayments = false;
-                          } else {
-                              LogPrintf("CheckBlock() : PoW Recipient masternode address validity skipping, Checks delay still active!\n");
-                          }
-                      }
-                   }
-                   if (nAmount == nMasternodePayment) {
-                      LogPrintf("CheckBlock() : PoW Recipient masternode amount validity succesfully verified\n");
-                   } else {
-                      LogPrintf("CheckBlock() : PoW Recipient masternode amount validity could not be verified\n");
-                      fBlockHasPayments = false;
-                   }
+                    if (mnodeman.IsPayeeAValidMasternode(rawPayee)) {
+                        LogPrintf("CheckBlock() : PoW Recipient masternode address validity succesfully verified\n");
+                    } else if (addressOut.ToString() == strVfyDevopsAddress) {
+                        LogPrintf("CheckBlock() : PoW Recipient masternode address validity succesfully verified\n");
+                    } else {
+                        if (nMasterNodeChecksEngageTime != 0) {
+                            if (fMnAdvRelay) {
+                                LogPrintf("CheckBlock() : PoW Recipient masternode address validity could not be verified\n");
+                                fBlockHasPayments = false;
+                            } else {
+                                LogPrintf("CheckBlock() : PoW Recipient masternode address validity skipping, Checks delay still active!\n");
+                            }
+                        }
+                    }
+                    if (nAmount == nMasternodePayment) {
+                        LogPrintf("CheckBlock() : PoW Recipient masternode amount validity succesfully verified\n");
+                    } else {
+                        LogPrintf("CheckBlock() : PoW Recipient masternode amount validity could not be verified\n");
+                        fBlockHasPayments = false;
+                    }
                 }
                 // Check for PoW devops payment
                 if (i == nProofOfIndexDevops) {
-                   if (addressOut.ToString() == strVfyDevopsAddress) {
-                      LogPrintf("CheckBlock() : PoW Recipient devops address validity succesfully verified\n");
-                   } else {
-                       LogPrintf("CheckBlock() : PoW Recipient devops address validity could not be verified\n");
-                       fBlockHasPayments = false;
-                       }
-                   }
-                   if (nAmount == nDevopsPayment) {
-                      LogPrintf("CheckBlock() : PoW Recipient devops amount validity succesfully verified\n");
-                   } else {
-                       if (nIndexedDevopsPayment >= nDevopsPayment) {
-                           LogPrintf("CheckBlock() : PoW Reciepient devops amount is abnormal due to large fee paid");
-                       } else {
-                           LogPrintf("CheckBlock() : PoW Reciepient devops amount validity could not be verified");
-                           fBlockHasPayments = false;
-                       }
-                   }
+                    if (addressOut.ToString() == strVfyDevopsAddress) {
+                        LogPrintf("CheckBlock() : PoW Recipient devops address validity succesfully verified\n");
+                    } else {
+                        LogPrintf("CheckBlock() : PoW Recipient devops address validity could not be verified\n");
+                        fBlockHasPayments = false;
+                    }
+                    if (nAmount == nDevopsPayment) {
+                        LogPrintf("CheckBlock() : PoW Recipient devops amount validity succesfully verified\n");
+                    } else {
+                        if (nIndexedDevopsPayment >= nDevopsPayment) {
+                            LogPrintf("CheckBlock() : PoW Reciepient devops amount is abnormal due to large fee paid");
+                        } else {
+                            LogPrintf("CheckBlock() : PoW Reciepient devops amount validity could not be verified");
+                            fBlockHasPayments = false;
+                        }
+                    }
+                }
             }
         }
         // Final checks (DevOps/Masternode payments)

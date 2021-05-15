@@ -344,6 +344,12 @@ void VRX_Dry_Run(const CBlockIndex* pindexLast)
         // Do nothing
     }// TODO setup next testing fork
 
+    // Masternode Payment Enforcement Update
+    if (pindexBest->nHeight == 725) {
+        fDryRun = true;
+        return; // enforce mn payment checks
+    }
+
     // Standard, non-Dry Run
     fDryRun = false;
     return;
