@@ -96,7 +96,7 @@ bool Velocity(CBlockIndex* prevBlock, CBlock* block)
         {
             HaveCoins = true;
         }
-        // Check for and enforce minimum TXs per block (Minimum TXs are disabled for Espers)
+        // Check for and enforce minimum TXs per block (Minimum TXs are disabled for PupaCoin)
         if(VELOCITY_MIN_TX[i] > 0 && TXcount < VELOCITY_MIN_TX[i])
         {
             LogPrintf("DENIED: Not enough TXs in block\n");

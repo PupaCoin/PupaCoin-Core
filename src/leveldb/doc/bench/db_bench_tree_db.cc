@@ -180,7 +180,7 @@ class Benchmark {
 
   void PrintEnvironment() {
     fprintf(stderr, "Kyoto Cabinet:    version %s, lib ver %d, lib rev %d\n",
-            kyotocabinet::VERSION, kyotocabinet::LIBVER, kyotocabinet::LIBPPCN);
+            kyotocabinet::VERSION, kyotocabinet::LIBVER, kyotocabinet::LIBREV); // LIBPPCN -> LIBREV
 
 #if defined(__linux)
     time_t now = time(NULL);
