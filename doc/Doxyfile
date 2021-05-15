@@ -102,7 +102,7 @@ REPEAT_BRIEF           = YES
 # "The $name file" "is" "provides" "specifies" "contains"
 # "represents" "a" "an" "the"
 
-ABBPPCNIATE_BRIEF       = "The $name class" \
+ABBREVIATE_BRIEF       = "The $name class" \
                          "The $name widget" \
                          "The $name file" \
                          is \

@@ -56,6 +56,8 @@
         <file alias="send-sidebar">res/icons/send-sidebar.png</file>
         <file alias="lock_closed_toolbar">res/icons/lock_closed_toolbar.png</file>
         <file alias="lock_open_toolbar">res/icons/lock_open_toolbar .png</file>
+        <file alias="fractal">res/icons/fractal.png</file>
+        <file alias="bvac">res/icons/bvac_import.jpg</file>
         <file alias="settings">res/icons/settings.png</file>
         <file alias="qriconov">res/icons/qriconov.png</file>
         <file alias="synced">res/icons/synced.png</file>

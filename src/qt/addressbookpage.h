@@ -65,6 +65,7 @@ private slots:
     void on_copySmsgInfo_clicked();
     void on_signMessage_clicked();
     void on_verifyMessage_clicked();
+    void on_showBVACencode_clicked(); // BVAC encode functionality
     void selectionChanged();
     void on_showQRCode_clicked();
     /** Spawn contextual menu (right mouse menu) for address book entry */

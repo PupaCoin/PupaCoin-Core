@@ -173,6 +173,29 @@ background-color:transparent;</string>
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="BVAC_import_pubkey">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>24</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/icons/bvac</normaloff>:/icons/bvac</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="pasteButton">
        <property name="toolTip">
         <string>Paste address from clipboard</string>
