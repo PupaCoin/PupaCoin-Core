@@ -156,6 +156,8 @@ extern bool fMnT2;
 //Logic for lock/unlock GUI icon
 //does not affect daemon operation
 extern bool settingsStatus;
+// Properly handle enforcement for MN checks
+extern int64_t nMasterNodeDelay;
 
 void RandAddSeed();
 void RandAddSeedPerfmon();

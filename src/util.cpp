@@ -119,6 +119,8 @@ bool fMnT2 = false;
 //Logic for lock/unlock GUI icon
 //does not affect daemon operation
 bool settingsStatus = false;
+// Properly handle enforcement for MN checks
+int64_t nMasterNodeDelay = (GetTime() + (5 * 60));
 
 // Init OpenSSL library multithreading support
 static CCriticalSection** ppmutexOpenSSL;
