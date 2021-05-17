@@ -30,13 +30,13 @@ static const int DATABASE_VERSION = 70509;
 //
 // network protocol versioning
 //
-static const int PROTOCOL_VERSION = 62033;
+static const int PROTOCOL_VERSION = 62034;
 
 // intial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 209;
 
 // disconnect from peers older than this proto version
-static const int MIN_PEER_PROTO_VERSION = 62032;
+static const int MIN_PEER_PROTO_VERSION = 62033;
 
 // minimum peer version accepted by MNenginePool
 static const int MIN_POOL_PEER_PROTO_VERSION = 62032;
@@ -54,10 +54,10 @@ static const int CADDR_TIME_VERSION = 31402;
 
 // only request blocks from nodes outside this range of versions
 static const int NOBLKS_VERSION_START = 0;
-static const int NOBLKS_VERSION_END = 62031;
+static const int NOBLKS_VERSION_END = 62032;
 
 // hard cutoff time for legacy network connections
-static const int64_t HRD_LEGACY_CUTOFF = 1621059089; // ON (Friday, May 14, 2021 11:11:29 PM GMT-07:00)
+static const int64_t HRD_LEGACY_CUTOFF = 9993058800; // OFF (NOT TOGGLED)
 
 // hard cutoff time for future network connections
 static const int64_t HRD_FUTURE_CUTOFF = 9993058800; // OFF (NOT TOGGLED)
