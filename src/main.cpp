@@ -2623,7 +2623,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         bDevOpsPayment = false;
     }
     // Run checks if at fork height
-    if(bDevOpsPayment && nBestHeight > 725)
+    if(nBestHeight > 725 && (nMasterNodeChecksDelayBaseTime + nMasterNodeDelay) < GetTime())
     {
         int64_t nStandardPayment = 0;
         int64_t nMasternodePayment = 0;
