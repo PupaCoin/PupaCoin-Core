@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = PupaCoin-qt
-VERSION = 1.0.0.2
+TARGET = PupaCoin-v1.0.0.4-qt
+VERSION = 1.0.0.4
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += core gui widgets network printsupport
 DEFINES += ENABLE_WALLET

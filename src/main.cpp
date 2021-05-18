@@ -2623,14 +2623,13 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         bDevOpsPayment = false;
     }
     // Run checks if at fork height
-    if(bDevOpsPayment && nBestHeight > 725)
+    if(nBestHeight > 725 && (nMasterNodeChecksDelayBaseTime + nMasterNodeDelay) < GetTime())
     {
         int64_t nStandardPayment = 0;
         int64_t nMasternodePayment = 0;
         int64_t nDevopsPayment = 0;
         int64_t nProofOfIndexMasternode = 0;
         int64_t nProofOfIndexDevops = 0;
-        int64_t nMasterNodeChecksDelay = 45 * 60;
         int64_t nMasterNodeChecksEngageTime = 0;
         const CBlockIndex* pindexPrev = pindexBest->pprev;
         bool isProofOfStake = !IsProofOfWork();
@@ -2664,11 +2663,8 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         nDevopsPayment = GetDevOpsPayment(pindexBest->nHeight, nStandardPayment) / COIN;
         LogPrintf("Hardset MasternodePayment: %lu | Hardset DevOpsPayment: %lu \n", nMasternodePayment, nDevopsPayment);
         // Increase time for Masternode checks delay during sync per-block
-        if (fIsInitialDownload) {
-            nMasterNodeChecksDelayBaseTime = GetTime();
-        } else {
-            nMasterNodeChecksEngageTime = nMasterNodeChecksDelayBaseTime + nMasterNodeChecksDelay;
-        }
+        nMasterNodeChecksDelayBaseTime = nMasterNodeDelay;
+        nMasterNodeChecksEngageTime = nMasterNodeChecksDelayBaseTime;
         // Devops Address Set and Updates
         strVfyDevopsAddress = Params().DevOpsAddress(); // Make sure this is correct
         // Check PoW or PoS payments for current block
