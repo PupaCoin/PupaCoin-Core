@@ -554,7 +554,7 @@ void PupaCoinGUI::createToolBars()
 
 void PupaCoinGUI::setClientModel(ClientModel *clientModel)
 {
-    netLabel->setText("v1.0.0.2");// Version in GUI
+    netLabel->setText("v1.0.0.4");// Version in GUI
 
     this->clientModel = clientModel;
     if(clientModel)

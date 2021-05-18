@@ -111,7 +111,7 @@ int64_t nLiveForkToggle = 0;
 //Rollback to block
 string strRollbackToBlock = "";
 //MasterNode recipient verification delay base time
-int64_t nMasterNodeChecksDelayBaseTime = 0;
+int64_t nMasterNodeChecksDelayBaseTime = GetTime();
 //MasterNode peer IP advanced relay system toggle
 bool fMnAdvRelay = false;
 //MasterNode tier 2
@@ -119,6 +119,8 @@ bool fMnT2 = false;
 //Logic for lock/unlock GUI icon
 //does not affect daemon operation
 bool settingsStatus = false;
+// Properly handle enforcement for MN checks
+int64_t nMasterNodeDelay = (15 * 60);
 
 // Init OpenSSL library multithreading support
 static CCriticalSection** ppmutexOpenSSL;
@@ -1230,6 +1232,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                fprintf(ConfFile, "addnode=143.198.232.91:20205\n");
                fprintf(ConfFile, "addnode=159.65.145.86:20205\n");
                fprintf(ConfFile, "addnode=207.154.220.210:20205\n");
+               fprintf(ConfFile, "addnode=188.166.166.220:20205\n");
                fclose(ConfFile);
     }
 
