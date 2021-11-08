@@ -113,6 +113,7 @@ inline void MilliSleep(int64_t n)
     boost::this_thread::sleep(boost::posix_time::milliseconds(n));
 #endif
 }
+//Standard args
 
 //Dark features
 extern bool fMasterNode;
@@ -153,9 +154,10 @@ extern int64_t nMasterNodeChecksDelayBaseTime;
 extern bool fMnAdvRelay;
 //MasterNode is tier 2
 extern bool fMnT2;
-//Logic for lock/unlock GUI icon
-//does not affect daemon operation
+// Logic for lock/unlock GUI icon, does not affect daemon operation
 extern bool settingsStatus;
+// Demi-node toggle
+extern bool fDemiNodes;
 // Properly handle enforcement for MN checks
 extern int64_t nMasterNodeDelay;
 

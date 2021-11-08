@@ -480,12 +480,12 @@ void PupaCoinGUI::createToolBars()
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->setContextMenuPolicy(Qt::PreventContextMenu);
     toolbar->setObjectName("tabs");
-    toolbar->setStyleSheet("QToolBar { background: none; } QToolButton { color: #ffffff; background: none; } QToolButton:hover { background-color: rgb(219, 205, 110, 0.4); } QToolButton:checked { background-color: rgb(219, 205, 110, 0.4); } QToolButton:pressed { background-color: rgb(219, 205, 110, 0.4); } #tabs { color: #ffffff; background: none; border: none;}");
+    toolbar->setStyleSheet("QToolBar { background: none; } QToolButton { color: #ffffff; background: none; } QToolButton:hover { background-color: rgba(219, 205, 110, 0.4); } QToolButton:checked { background-color: rgba(219, 205, 110, 0.4); } QToolButton:pressed { background-color: rgba(219, 205, 110, 0.4); } #tabs { color: #ffffff; background: none; border: none;}");
     toolbar->setIconSize(QSize(64,64));
 
     if(!fUseDarkTheme)
     {
-        toolbar->setStyleSheet("QToolBar { background: none; } QToolButton { color: #ffffff; background: none;} QToolButton:hover { background-color: rgb(219, 205, 110, 0.4); } QToolButton:checked { background-color: rgb(219, 205, 110, 0.4); } QToolButton:pressed { background-color: rgb(219, 205, 110, 0.4); } #tabs { color: #ffffff; background: none; border: none;}");//QToolBar { background: none; }
+        toolbar->setStyleSheet("QToolBar { background: none; } QToolButton { color: #ffffff; background: none;} QToolButton:hover { background-color: rgba(219, 205, 110, 0.4); } QToolButton:checked { background-color: rgba(219, 205, 110, 0.4); } QToolButton:pressed { background-color: rgba(219, 205, 110, 0.4); } #tabs { color: #ffffff; background: none; border: none;}");//QToolBar { background: none; }
     }
 
     QLabel* header = new QLabel();
@@ -541,7 +541,7 @@ void PupaCoinGUI::createToolBars()
 
 void PupaCoinGUI::setClientModel(ClientModel *clientModel)
 {
-    netLabel->setText("v1.0.0.3");// Version in GUI
+    netLabel->setText("v1.0.0.4");// Version in GUI
 
     this->clientModel = clientModel;
     if(clientModel)

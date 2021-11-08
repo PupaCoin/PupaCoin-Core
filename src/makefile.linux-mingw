@@ -110,6 +110,9 @@ OBJS= \
     obj/masternode-payments.o \
     obj/rpcmnengine.o \
     obj/spork.o \
+    obj/deminode/demimodule.o \
+    obj/deminode/deminet.o \
+    obj/deminode/demisync.o \
     obj/crypto/common/hmac_sha256.o \
     obj/crypto/common/hmac_sha512.o \
     obj/crypto/common/ripemd160.o \
@@ -148,7 +151,7 @@ version.cpp: obj/build.h
 DEFS += -DHAVE_BUILD_INFO
 
 obj/%.o: %.cpp $(HEADERS)
-	$(CXX) -c $(CFLAGS) -o $@ $<
+	$(CXX) -c -std=c++11 $(CFLAGS) -o $@ $<
 
 PupaCoind.exe: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS) -lshlwapi

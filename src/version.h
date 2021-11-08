@@ -30,7 +30,7 @@ static const int DATABASE_VERSION = 70509;
 //
 // network protocol versioning
 //
-static const int PROTOCOL_VERSION = 62034;
+static const int PROTOCOL_VERSION = 62035;
 
 // intial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 209;
@@ -76,5 +76,8 @@ static const int64_t MIN_MASTERNODE_BSC_RELAY = 62026; // ON
 
 // MasterNode Tier 2 payment start date
 static const int64_t MASTERNODE_TIER_2_START = 1602504000; // ON (Monday, October 12, 2020 5:00:00 AM GMT-07:00 PST)
+
+// "demi-nodes" command, enhanced "getdata" behavior starts with this version:
+static const int DEMINODE_VERSION = 60035;
 
 #endif

@@ -303,6 +303,14 @@ std::string HelpMessage()
     strUsage += "  -liveforktoggle=<n> " + _("Toggle experimental features via block height testing fork, (example: -command=<fork_height>)") + "\n";
     strUsage += "  -mnadvrelay=<n> " + _("Toggle MasterNode Advanced Relay System via 1/0, (example: -command=<true/false>)") + "\n";
 
+    strUsage += "\n" + _("Demi-node feature options:") + "\n";
+    strUsage += "  -deminodes=<n> " + _("Toggle Demi-node features on/off, (0-1, default: 0") + "\n";
+    strUsage += "  -demimaxdepth=<n> " + _("Set the maximum override depth for chain reorganization, (default: 0") + "\n";
+    strUsage += "  -demilocksync=<n> " + _("Lock Demi-nodes to either allow or deny standard node sync failover, (0-1, default: 0") + "\n";
+    strUsage += "  -demistrict=<n> " + _("Toggle using Demi-nodes exclusively to accept new blocks on/off, (0-1, default: 0") + "\n";
+    strUsage += "  -demipeerlimit=<n> " + _("Allow/Deny blocks from peers using legacy clients/wallets, (0-1, default: 0") + "\n";
+    strUsage += "  -demireorgtype=<n> " + _("Allow/Deny reorganize requests from peers as well as Demi-nodes, (0-1, default: 0") + "\n";
+
     return strUsage;
 }
 
@@ -1015,23 +1023,40 @@ bool AppInit2(boost::thread_group& threadGroup)
     if(!strLiveForkToggle.empty()){
         LogPrintf("Verifying height selection for experimental testing feature fork toggle...\n");
         std::istringstream(strLiveForkToggle) >> nLiveForkToggle;
-        if(nLiveForkToggle == 0)
-        {
+        if(nLiveForkToggle == 0) {
             LogPrintf("Continuing with fork toggle manually disabled by user...\n");
-        }
-        else if(nLiveForkToggle < nBestHeight)
-        {
+        } else if(nLiveForkToggle < nBestHeight) {
             return InitError(_("Invalid experimental testing feature fork toggle, please select a higher block than currently sync'd height\n"));
-        }
-        else
-        {
+        } else {
             LogPrintf("Continuing with fork toggle set for block: %s | Happy testing!\n", strLiveForkToggle.c_str());
         }
-
-    }
-    else {
+    } else {
         nLiveForkToggle = 0;
         LogPrintf("No experimental testing feature fork toggle detected... skipping...\n");
+    }
+
+    // Check for Demi-node toggle
+    uiInterface.InitMessage(_("Checking Demi-node feature toggle..."));
+    fDemiNodes = GetBoolArg("-deminodes", false);
+    LogPrintf("Checking for Demi-nodes feature toggle...\n");// BLOCK_REORG_OVERRIDE_DEPTH
+    if(fDemiNodes) {
+        // Set Demi-node values
+        uiInterface.InitMessage(_("Configuring Demi-node systems..."));
+        std::string strOverrideDepth = GetArg("-demimaxdepth", "");
+        if(!strOverrideDepth.empty()) {
+            std::istringstream(strOverrideDepth) >> BLOCK_REORG_OVERRIDE_DEPTH;
+            if(BLOCK_REORG_OVERRIDE_DEPTH == 0) {
+                LogPrintf("Continuing with Demi-node depth override manually disabled by user...\n");
+            } else if(BLOCK_REORG_OVERRIDE_DEPTH < 0) {
+                return InitError(_("Invalid Demi-node depth override, selected value must be higher than Zero!\n"));
+            } else {
+                BLOCK_REORG_THRESHOLD = (BLOCK_REORG_MAX_DEPTH + BLOCK_REORG_OVERRIDE_DEPTH);
+                LogPrintf("Continuing with Demi-node depth override height of: %s\n", strOverrideDepth.c_str());
+            }
+        }
+    } else {
+        // Demi-nodes disabled
+        LogPrintf("No Demi-node features selected... skipping...\n");
     }
 
     // Check toggle switch for masternode advanced relay

@@ -129,7 +129,8 @@ enum {
     MSG_SPORK,
     MSG_MASTERNODE_WINNER,
     MSG_MASTERNODE_SCANNING_ERROR,
-    MSG_DSTX
+    MSG_DSTX,
+    MSG_DEMIBLOCK,// TODO: verify comma
 };
 
 extern bool fDiscover;

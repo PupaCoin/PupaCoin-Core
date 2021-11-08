@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = PupaCoin-v1.0.0.3-qt
-VERSION = 1.0.0.3
+TARGET = PupaCoin-v1.0.0.4-qt
+VERSION = 1.0.0.4
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += core gui widgets network printsupport
 DEFINES += ENABLE_WALLET
@@ -344,7 +344,10 @@ HEADERS += src/qt/bitcoingui.h \
     src/crypto/common/sph_types.h \
     src/crypto/bmw/bmw512.h \
     src/crypto/echo/echo512.h \
-    src/limitedmap.h
+    src/limitedmap.h \
+    src/deminode/demimodule.h \
+    src/deminode/deminet.h \
+    src/deminode/demisync.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -466,7 +469,10 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/rpcsmessage.cpp \
     src/crypto/common/aes_helper.c \
     src/crypto/common/bmw.c \
-    src/crypto/common/echo.c
+    src/crypto/common/echo.c \
+    src/deminode/demimodule.cpp \
+    src/deminode/deminet.cpp \
+    src/deminode/demisync.cpp
 
 RESOURCES += \
     src/qt/bitcoin.qrc

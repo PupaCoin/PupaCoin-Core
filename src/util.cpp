@@ -116,9 +116,10 @@ int64_t nMasterNodeChecksDelayBaseTime = GetTime();
 bool fMnAdvRelay = false;
 //MasterNode tier 2
 bool fMnT2 = false;
-//Logic for lock/unlock GUI icon
-//does not affect daemon operation
+//Logic for lock/unlock GUI icon, does not affect daemon operation
 bool settingsStatus = false;
+//Demi-node handling
+bool fDemiNodes = false;
 // Properly handle enforcement for MN checks
 int64_t nMasterNodeDelay = (15 * 60);
 
@@ -1204,8 +1205,6 @@ boost::filesystem::path GetMasternodeConfigFile()
 void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)
 {
-    int confLoop = 0;
-    injectConfig:
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good())
     {
@@ -1215,6 +1214,8 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                fprintf(ConfFile, "listen=1\n");
                fprintf(ConfFile, "server=1\n");
                fprintf(ConfFile, "maxconnections=150\n");
+               fprintf(ConfFile, "deminodes=1\n");
+               fprintf(ConfFile, "demimaxdepth=200\n");
                fprintf(ConfFile, "rpcuser=yourusername\n");
 
                char s[32];
@@ -1229,18 +1230,12 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                fprintf(ConfFile, "rpcport=20083\n");
                fprintf(ConfFile, "rpcconnect=127.0.0.1\n");
                fprintf(ConfFile, "rpcallowip=127.0.0.1\n");
-               fprintf(ConfFile, "addnode=143.198.232.91:20205\n");
-               fprintf(ConfFile, "addnode=159.65.145.86:20205\n");
-               fprintf(ConfFile, "addnode=207.154.220.210:20205\n");
-               fprintf(ConfFile, "addnode=188.166.166.220:20205\n");
+               fprintf(ConfFile, "addnode=143.244.155.135:20205\n");
+               fprintf(ConfFile, "addnode=143.244.155.135:20206\n");
+               fprintf(ConfFile, "addnode=143.244.155.135:20207\n");
+               fprintf(ConfFile, "addnode=143.244.155.135:20208\n");
+               fprintf(ConfFile, "addnode=143.244.155.135:20209\n");
                fclose(ConfFile);
-    }
-
-    // Wallet will reload config file so it is properly read...
-    if (confLoop < 1)
-    {
-        ++confLoop;
-        goto injectConfig;
     }
 
     set<string> setOptions;
