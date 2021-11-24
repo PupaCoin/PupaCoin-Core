@@ -110,17 +110,17 @@ void VRXswngdebug(bool fProofOfStake)
         debugTerminalAverage = TerminalAverage;
         debugDifCurve = difCurve;
         LogPrintf("VRX_Threadcurve - Previous difficulty found: %d \n", VRX_GetPrevDiff(fProofOfStake));
-        if(VRX_GetPrevDiff(fProofOfStake) < 1) {
-            // Skip
-            LogPrintf("VRX_Threadcurve - Difficulty too low for curve, skipping \n");
-            return;
-        }
         while(difTime > (debugminuteRounds * 60)) {
+            if(VRX_GetPrevDiff(fProofOfStake) < 1) {
+                // Skip
+                LogPrintf("VRX_Threadcurve - Difficulty too low for curve, skipping \n");
+                return;
+            }
             debugTerminalAverage /= debugDifCurve;
-            LogPrintf("diffTime%s is greater than %u Hours: %u \n",difType.c_str(),debugminuteRounds,cntTime);
+            LogPrintf("diffTime%s is greater than %u Minutes: %u \n",difType.c_str(),debugminuteRounds,cntTime);
             LogPrintf("Difficulty will be multiplied by: %d \n",debugTerminalAverage);
-            // Break loop after 5 hours, otherwise time threshold will auto-break loop
-            if (debugminuteRounds > (5 * debugminuteRounds)){
+            // Break loop after 20 minutes, otherwise time threshold will auto-break loop
+            if (debugminuteRounds > (5 + 15)){
                 break;
             }
             debugDifCurve ++;
@@ -342,15 +342,15 @@ void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake)
         if(pindexLast->nHeight > 7500) {
             // Set unbiased comparison
             difTime = blkTime - cntTime;
-            // Skip Extended Curve Run if diff is too low
-            if(VRX_GetPrevDiff(fProofOfStake) < 1) {
-                // Skip
-                return;
-            }
             // Run Curve
             while(difTime > (minuteRounds * 60)) {
-                // Break loop after 5 hours, otherwise time threshold will auto-break loop
-                if(minuteRounds > (5 * minuteRounds)){
+                // Skip Extended Curve Run if diff is too low
+                if(VRX_GetPrevDiff(fProofOfStake) < 1) {
+                    // Skip
+                    break;
+                }
+                // Break loop after 20 minutes, otherwise time threshold will auto-break loop
+                if(minuteRounds > (5 + 15)){
                     fCRVreset = true;
                     break;
                 }

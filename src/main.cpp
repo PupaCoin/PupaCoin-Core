@@ -2913,13 +2913,18 @@ bool CBlock::AcceptBlock()
     }
 
     uint256 hashProof;
-    if (IsProofOfWork() && nHeight > Params().EndPoWBlock()){
-        return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
-    } else {
-        // PoW is checked in CheckBlock()
-        if (IsProofOfWork())
-        {
-            hashProof = GetPoWHash();
+    if (IsProofOfWork()) {
+        if (nHeight > Params().EndPoWBlock()){
+            return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
+        } else if (nHeight > 50000 && nHeight < 52000){
+            // Temporary PoW denial to allow for network upgrade
+            return DoS(100, error("AcceptBlock() : reject proof-of-work during net upgrade for block: %d", nHeight));
+        } else {
+            // PoW is checked in CheckBlock()
+            if (IsProofOfWork())
+            {
+                hashProof = GetPoWHash();
+            }
         }
     }
 
