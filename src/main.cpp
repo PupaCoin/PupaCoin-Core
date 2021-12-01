@@ -1729,7 +1729,7 @@ bool CTransaction::ConnectInputs(CTxDB& txdb, MapPrevTx inputs, map<uint256, CTx
                 // Skip ECDSA signature verification when connecting blocks (fBlock=true)
                 // before the last blockchain checkpoint. This is safe because block merkle hashes are
                 // still computed and checked, and any change will be caught at the next checkpoint.
-                if (!(fBlock && !IsInitialBlockDownload()))
+                if (!(fBlock && (nBestHeight < Checkpoints::GetTotalBlocksEstimate())))
                 {
                     // Verify signature
                     if (!VerifySignature(txPrev, *this, i, flags, 0))
