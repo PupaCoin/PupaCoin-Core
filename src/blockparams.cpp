@@ -328,6 +328,7 @@ void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake)
         difTime = cntTime - prvTime;
         minuteRounds = 15;
         difCurve = 2;
+        uint64_t loopbrk = (5 + 15);// TODO: Clean this up
         fCRVreset = false;
 
         // Debug print toggle
@@ -337,6 +338,13 @@ void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake)
             difType = "PoW";
         }
         if(fDebug) VRXswngdebug(fProofOfStake);
+
+        // Skew Patch for PupaCoin
+        // TODO: Remove after rolling genesis feature launches
+        if(pindexLast->nHeight > 63000) {
+            minuteRounds = 45;
+            loopbrk = (5 + 60);
+        }
 
         // Version 1.2 Extended Curve Run Upgrade
         if(pindexLast->nHeight > 7500) {
@@ -349,8 +357,8 @@ void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake)
                     // Skip
                     break;
                 }
-                // Break loop after 20 minutes, otherwise time threshold will auto-break loop
-                if(minuteRounds > (5 + 15)){
+                // Break loop after 65 minutes, otherwise time threshold will auto-break loop
+                if(minuteRounds > loopbrk){
                     fCRVreset = true;
                     break;
                 }
@@ -361,7 +369,14 @@ void VRX_ThreadCurve(const CBlockIndex* pindexLast, bool fProofOfStake)
                 // Increase Curve per round
                 difCurve ++;
                 // Move up an hour per round
-                minuteRounds ++;
+                //
+                // Skew Patch for PupaCoin
+                // TODO: Remove after rolling genesis feature launches
+                if(pindexLast->nHeight > 63000) {
+                    minuteRounds += 5;
+                } else {
+                    minuteRounds ++;
+                }
             }
         } else {// Version 1.1 Standard Curve Run
             if(difTime > (minuteRounds+0) * 60 * 60) { TerminalAverage /= difCurve; }
